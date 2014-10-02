@@ -1,0 +1,15 @@
+{ 
+	"name": "mattthommes/google_voice",
+	"description": "Working with Google Voice data.",
+	"authors": [{
+			"name": "Matt Thommes",
+			"email": "matt@thomm.es",
+			"homepage": "http://matt.thomm.es",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"MattThommes/Global": "1.1"
+	},
+	"minimum-stability": "dev"
+}
