@@ -5,4 +5,4 @@ Working with Google Voice data.
 
 ## Installation
 
-Drag the "Calls" folder from your [Google Voice takeout archive](https://www.google.com/settings/takeout) into the same folder that this script runs.
+Drag the "Calls" folder from your [Google Voice takeout archive](https://www.google.com/settings/takeout) into the same folder that this script runs. Unfortunately the Google Takeout system only provides HTML files, which makes parsing it for the actual data more challenging.
