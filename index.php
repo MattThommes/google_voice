@@ -3,6 +3,7 @@
 	require "vendor/autoload.php";
 	use MattThommes\Debug;
 	$debug = new Debug;
+	include "db_connect.php";
 
 	$path_to_calls = "Calls";
 
