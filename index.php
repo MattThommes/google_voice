@@ -2,6 +2,7 @@
 
 	require "vendor/autoload.php";
 	use MattThommes\Debug;
+	use Sunra\PhpSimple\HtmlDomParser;
 	$debug = new Debug;
 	include "db_connect.php";
 
@@ -26,9 +27,8 @@ $debug->dbg($file,1);
 //$debug->dbg($time,1);
 					$time = date("Y-m-d H:i:s", strtotime($time));
 //$debug->dbg($time);
-					$file_contents = file_get_contents($path_to_calls . "/Calls/" . $file);
-					$fd = FluentDOM($file_contents);
-					$message = $fd->find('//q')->text();
+					$dom = HtmlDomParser::file_get_html($path_to_calls . "/Calls/" . $file);
+					$message = $dom->find("q");
 $debug->dbg($message);
 $debug->dbg("testing just one");
 				}

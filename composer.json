@@ -10,7 +10,7 @@
 	],
 	"require": {
 		"MattThommes/Global": "1.1",
-		"fluentdom/fluentdom": "5.x"
+		"sunra/php-simple-html-dom-parser": "v1.5.0"
 	},
 	"minimum-stability": "dev"
 }
