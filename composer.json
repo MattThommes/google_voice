@@ -9,7 +9,8 @@
 		}
 	],
 	"require": {
-		"MattThommes/Global": "1.1"
+		"MattThommes/Global": "1.1",
+		"fluentdom/fluentdom": "5.x"
 	},
 	"minimum-stability": "dev"
 }
