@@ -30,27 +30,31 @@ $debug->dbg($file,1);
 						$time = date("Y-m-d H:i:s", strtotime($time));
 						$file_contents = file_get_contents($path_to_calls . "/Calls/" . $file);
 						$match = preg_match("/<q>.*<\/q>/", $file_contents, $message);
-						$message = preg_replace("/<\/?q>/", "", $message[0]);
-						$fields = array(
-							"time",
-							"cdate",
-							"filename",
-							"`from`",
-							"file_content",
-							"message",
-						);
-						$values = array(
-							"'" . $time . "'",
-							"NOW()",
-							"'" . $file . "'",
-							"'" . $from . "'",
-							"'" . str_replace("'", "\'", $file_contents) . "'",
-							"'" . str_replace("'", "\'", $message) . "'",
-						);
-						$query = "INSERT INTO sms (" . implode(", ", $fields) . ") VALUES (" . implode(", ", $values) . ")";
+						if (isset($message[0]) && $message[0]) {
+							$message = preg_replace("/<\/?q>/", "", $message[0]);
+							$fields = array(
+								"time",
+								"cdate",
+								"filename",
+								"`from`",
+								"file_content",
+								"message",
+							);
+							$values = array(
+								"'" . $time . "'",
+								"NOW()",
+								"'" . $file . "'",
+								"'" . $from . "'",
+								"'" . str_replace("'", "\'", $file_contents) . "'",
+								"'" . str_replace("'", "\'", $message) . "'",
+							);
+							$query = "INSERT INTO sms (" . implode(", ", $fields) . ") VALUES (" . implode(", ", $values) . ")";
 //$debug->dbg($query,1);
-						$ins = $db_conn->query($query);
-$debug->dbg("File processed",1);						
+							$ins = $db_conn->query($query);
+$debug->dbg("Inserted into DB",1);
+						} else {
+$debug->dbg("NO CONTENT FOUND!",1);						
+						}
 					}
 //$debug->dbg("testing just one");
 				}
