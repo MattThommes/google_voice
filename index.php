@@ -2,7 +2,6 @@
 
 	require "vendor/autoload.php";
 	use MattThommes\Debug;
-	use Sunra\PhpSimple\HtmlDomParser;
 	$debug = new Debug;
 	include "db_connect.php";
 
@@ -20,17 +19,40 @@
 			$file = file_basename($file);
 			if ($file) {
 				if (preg_match("- Text -", $file)) {
+					$query = "SELECT * FROM sms WHERE filename = '" . $file . "'";
+					$exists = $db_conn->query($query);
+					$exists = $exists->fetch();
+					if (!$exists) {
 $debug->dbg($file,1);
-					$parts = explode(" - Text - ", $file);
-					$from = $parts[0];
-					$time = trim($parts[1], ".html");
-//$debug->dbg($time,1);
-					$time = date("Y-m-d H:i:s", strtotime($time));
-//$debug->dbg($time);
-					$dom = HtmlDomParser::file_get_html($path_to_calls . "/Calls/" . $file);
-					$message = $dom->find("q");
-$debug->dbg($message);
-$debug->dbg("testing just one");
+						$parts = explode(" - Text - ", $file);
+						$from = $parts[0];
+						$time = trim($parts[1], ".html");
+						$time = date("Y-m-d H:i:s", strtotime($time));
+						$file_contents = file_get_contents($path_to_calls . "/Calls/" . $file);
+						$match = preg_match("/<q>.*<\/q>/", $file_contents, $message);
+						$message = preg_replace("/<\/?q>/", "", $message[0]);
+						$fields = array(
+							"time",
+							"cdate",
+							"filename",
+							"`from`",
+							"file_content",
+							"message",
+						);
+						$values = array(
+							"'" . $time . "'",
+							"NOW()",
+							"'" . $file . "'",
+							"'" . $from . "'",
+							"'" . str_replace("'", "\'", $file_contents) . "'",
+							"'" . str_replace("'", "\'", $message) . "'",
+						);
+						$query = "INSERT INTO sms (" . implode(", ", $fields) . ") VALUES (" . implode(", ", $values) . ")";
+//$debug->dbg($query,1);
+						$ins = $db_conn->query($query);
+$debug->dbg("File processed",1);						
+					}
+//$debug->dbg("testing just one");
 				}
 			}
 		}
