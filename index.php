@@ -26,9 +26,11 @@
 $debug->dbg($file,1);
 						$parts = explode(" - Text - ", $file);
 						$from = $parts[0];
-						$time = trim($parts[1], ".html");
-						$time = date("Y-m-d H:i:s", strtotime($time));
+						//$time = trim($parts[1], ".html");
 						$file_contents = file_get_contents($path_to_calls . "/Calls/" . $file);
+						$match = preg_match("/\stitle=\".*\">/", $file_contents, $time);
+						$time = substr($time[0], 8, strlen($time[0]) - 10);
+						$time = date("Y-m-d H:i:s", strtotime($time));
 						$match = preg_match("/<q>.*<\/q>/", $file_contents, $message);
 						if (isset($message[0]) && $message[0]) {
 							$message = preg_replace("/<\/?q>/", "", $message[0]);
